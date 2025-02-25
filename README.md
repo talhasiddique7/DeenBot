@@ -1,4 +1,4 @@
-# Quran RAG Chatbot
+# DeenBot RAG Chatbot
 
 A lightweight **Retrieval-Augmented Generation (RAG) chatbot** built using **LangChain**, **FAISS**, and **sentence-transformers** to answer queries based on a Quranic text knowledge base. Designed for **efficient local use within 8GB RAM**.
 
@@ -13,8 +13,8 @@ A lightweight **Retrieval-Augmented Generation (RAG) chatbot** built using **Lan
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/talhasiddique7/quran-rag-chatbot.git
-   cd quran-rag-chatbot
+   git clone https://github.com/talhasiddique7/DeenBot.git
+   cd DeenBot
    ```
 
 2. Install Python 3.10 (if not installed):

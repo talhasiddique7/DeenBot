@@ -14,7 +14,7 @@ def clean_quran_data(txt_path):
     return df
 
 # Load and clean Quran data
-quran_path = "quran_merged.txt"
+quran_path = "Data/quran_merged.txt"
 df = clean_quran_data(quran_path)
 
 # Load data into LangChain
