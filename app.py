@@ -1,4 +1,4 @@
-#libraries import 
+# Libraries Import
 import streamlit as st
 import time
 from together import Together
@@ -14,16 +14,16 @@ load_dotenv()
 TOGETHER_AI_API_KEY = os.getenv("TOGETHER_AI_API_KEY")
 
 # Streamlit UI
-st.title("🔥 Chullah RAG Chatbot")
-st.write("Ask me anything about Chullah!")
+st.title("📖 Quran RAG Chatbot")
+st.write("Ask me anything about the Quran!")
 
 # Define Prompt Template to prevent hallucinations
 custom_prompt = PromptTemplate(
     input_variables=["context", "query"],
-    template="You are an AI assistant for Chullah. Answer **only** based on the following context:\n\n"
+    template="You are an AI assistant specialized in Quranic interpretation. Answer **only** based on the following context:\n\n"
              "{context}\n\n"
-             "If the question is unrelated to Chullah, simply say: "
-             "'I can only answer questions related to Chullah.'\n\n"
+             "If the question is unrelated to the Quran, simply say: "
+             "'I can only answer questions related to the Quran.'\n\n"
              "Question: {query}\n"
              "Answer:"
 )
@@ -33,9 +33,9 @@ def load_faiss():
     """ Load FAISS database with embeddings """
     st.write("🔄 Loading FAISS vector database...")
     try:
-        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L12-v2")
-        db = FAISS.load_local("vectorstore/db_faiss", embeddings, allow_dangerous_deserialization=True)
-        retriever = db.as_retriever(search_type="similarity", search_kwargs={'k': 5, 'fetch_k': 5})
+        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        db = FAISS.load_local("vectorstore/quran_faiss", embeddings, allow_dangerous_deserialization=True)
+        retriever = db.as_retriever(search_type="similarity", search_kwargs={'k': 3, 'fetch_k': 3})
         st.success("✅ Database loaded successfully!")
         return retriever
     except Exception as e:
@@ -59,7 +59,7 @@ together_client = load_together_ai()
 
 def query_together_ai(context, question):
     """ Query the Together AI model with FAISS knowledge only """
-    model_name = "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"  # Adjust as needed
+    model_name = "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"
     messages = [{"role": "user", "content": custom_prompt.format(context=context, query=question)}]
 
     try:
@@ -86,7 +86,7 @@ if retriever and together_client:
 
                     # Ensure the model doesn't make up answers
                     if context == "No relevant data found.":
-                        response_text = "⚠️ I can only answer questions related to Chullah."
+                        response_text = "⚠️ I can only answer questions related to the Quran."
                     else:
                         response_text = query_together_ai(context, query)
 

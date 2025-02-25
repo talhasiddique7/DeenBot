@@ -1,3 +1,4 @@
+import time
 import pandas as pd
 from langchain_community.document_loaders import DataFrameLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -12,6 +13,9 @@ def clean_quran_data(txt_path):
     df["text"] = df.apply(lambda row: f"Ayah {row['Surah']}:{row['Ayah']}\nArabic: {row['Arabic']}\nUrdu: {row['Urdu']}", axis=1)
     
     return df
+
+# Start timing
+start_time = time.time()
 
 # Load and clean Quran data
 quran_path = "Data/quran_merged.txt"
@@ -34,4 +38,8 @@ db = FAISS.from_documents(documents, embeddings)
 # Save FAISS index locally
 db.save_local("vectorstore/quran_faiss")
 
-print("✅ Quran FAISS index creation complete.")
+# End timing
+end_time = time.time()
+
+time_taken = end_time - start_time
+print(f"✅ Quran FAISS index creation complete. Time taken: {time_taken:.2f} seconds")
